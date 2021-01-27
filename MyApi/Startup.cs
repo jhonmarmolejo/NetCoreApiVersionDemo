@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
+using MyApi.Extensions;
 
 namespace MyApi
 {
@@ -21,13 +23,13 @@ namespace MyApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCustomOpenApi();
 
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = new ApiVersion(1, 0);
                 x.AssumeDefaultVersionWhenUnspecified = true;
                 x.ReportApiVersions = true;
-                x.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
             });
         }
 
@@ -39,6 +41,7 @@ namespace MyApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCustomSwagger();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();

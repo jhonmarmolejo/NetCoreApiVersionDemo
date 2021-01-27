@@ -2,9 +2,9 @@
 
 namespace MyApi.Controllers.v2
 {
-    [Route("api/[controller]")]
     [ApiController]
     [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class DemoController : ControllerBase
     {
         [HttpGet]
